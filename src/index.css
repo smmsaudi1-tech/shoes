@@ -1,0 +1,382 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #08090b;
+    color: #f5f5f7;
+    overflow: hidden;
+    user-select: none;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-nav {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-nav-brand {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* 3D Extruded Wordmark & Emblem */
+.logo-3d-wrap {
+  perspective: 500px;
+}
+
+.logo-3d-icon {
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 4px 10px rgba(255, 110, 20, 0.45));
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
+}
+
+.group:hover .logo-3d-icon {
+  transform: rotateX(12deg) rotateY(-18deg) scale(1.08);
+  filter: drop-shadow(0 6px 16px rgba(255, 130, 30, 0.75));
+}
+
+.logo-3d-text {
+  color: #ffffff;
+  text-shadow:
+    0 1px 0 #d4d4d8,
+    0 2px 0 #71717a,
+    0 3px 0 #27272a,
+    0 6px 14px rgba(0, 0, 0, 0.85);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), text-shadow 0.45s ease;
+}
+
+.group:hover .logo-3d-text {
+  transform: translateZ(6px) rotateX(8deg);
+  text-shadow:
+    0 1px 0 #ffe4c4,
+    0 2px 0 #c27838,
+    0 3px 0 #4a260a,
+    0 6px 18px rgba(255, 125, 30, 0.45);
+}
+
+/* Studio gallery wall using real textured spotlight backdrop */
+.gallery-wall-bg {
+  background-color: #07080a;
+  background-image: url('/wall-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+  .gallery-wall-bg {
+    background-size: 100% 100%;
+  }
+}
+
+/* Subtle architectural wall vignette */
+.gallery-vignette {
+  background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.72) 100%);
+}
+
+/* Signature smooth camera zoom & pan transition */
+.camera-stage {
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 3D Frosted Glass Display Shelf */
+.shelf-bar {
+  height: 9px;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(210, 220, 235, 0.14) 38%,
+    rgba(30, 34, 42, 0.55) 100%
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.42);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.92),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shelf-card:hover .shelf-bar,
+.shelf-card.is-active .shelf-bar {
+  height: 9px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 95, 10, 0.85) 0%,
+    #ff9d2e 25%,
+    #fff3cf 50%,
+    #ff9d2e 75%,
+    rgba(255, 95, 10, 0.85) 100%
+  );
+  border-top: 1px solid #ffe7b3;
+  border-bottom: 1px solid rgba(255, 110, 20, 0.7);
+  box-shadow:
+    0 0 18px 4px rgba(255, 115, 0, 0.95),
+    0 0 46px 12px rgba(255, 90, 0, 0.75),
+    0 18px 65px 16px rgba(255, 78, 0, 0.48),
+    0 -12px 35px 4px rgba(255, 145, 40, 0.5);
+}
+
+/* Tall 5-column organic volumetric ceiling spotlights (zero hard edges) */
+.ceiling-beam {
+  background: radial-gradient(
+    ellipse 48% 82% at 50% 14%,
+    rgba(240, 246, 255, 0.24) 0%,
+    rgba(215, 226, 240, 0.13) 36%,
+    rgba(175, 190, 210, 0.04) 64%,
+    transparent 88%
+  );
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+/* Per-card subtle spotlight boost on hover */
+.shelf-spotlight-cone {
+  background: radial-gradient(
+    ellipse 60% 85% at 50% 35%,
+    rgba(255, 210, 150, 0.22) 0%,
+    rgba(255, 130, 40, 0.08) 55%,
+    transparent 100%
+  );
+  filter: blur(22px);
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.shelf-card:hover .shelf-spotlight-cone,
+.shelf-card.is-active .shelf-spotlight-cone {
+  opacity: 1;
+}
+
+/* Upward bloom from the glowing shelf onto the sneaker */
+.shelf-up-glow {
+  opacity: 0.15;
+  background: radial-gradient(ellipse 65% 100% at 50% 100%, rgba(255, 140, 40, 0.65) 0%, rgba(255, 85, 0, 0.22) 55%, transparent 85%);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.shelf-card:hover .shelf-up-glow,
+.shelf-card.is-active .shelf-up-glow {
+  opacity: 1;
+}
+
+/* Ambient orange wall wash beneath active/hovered shelf */
+.shelf-glow-wash {
+  opacity: 0.14;
+  background: radial-gradient(ellipse 76% 100% at 50% 0%, rgba(255, 115, 25, 0.68) 0%, rgba(255, 72, 0, 0.28) 48%, transparent 82%);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.shelf-card:hover .shelf-glow-wash,
+.shelf-card.is-active .shelf-glow-wash {
+  opacity: 1;
+}
+
+/* Smooth lift on hover/active without CSS filter (keeps PNG razor-sharp during camera zoom) */
+.shoe-sole-glow {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shelf-card:hover .shoe-sole-glow {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.shelf-card.is-active .shoe-sole-glow {
+  transform: translateY(-2px);
+}
+
+/* Custom scrollbar for bag & size dropdown */
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 160, 0.3);
+  border-radius: 999px;
+}
+
+@keyframes fadeSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes toastPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -14px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes introEmblem {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(16px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes introLetter {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) rotateX(40deg);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+/* Cinematic Intro 3D Grid, Outlined Watermark, Shoe Pop, Shockwave & Embers */
+.intro-perspective-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 130, 40, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 130, 40, 0.09) 1px, transparent 1px);
+  background-size: 64px 64px;
+  transform: perspective(500px) rotateX(62deg) translateY(38%);
+  transform-origin: center bottom;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, black 15%, transparent 80%);
+  opacity: 0.7;
+}
+
+.intro-outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.12);
+}
+
+.intro-ember {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: #ff9a2e;
+  box-shadow: 0 0 10px 2px rgba(255, 120, 20, 0.85);
+  animation: emberFloat linear infinite;
+}
+
+@keyframes emberFloat {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-95vh) scale(0.2);
+    opacity: 0;
+  }
+}
+
+@keyframes introWordSlide {
+  0% {
+    opacity: 0;
+    transform: scale(1.15) translateX(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes introShoePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.82) translateY(18px) rotate(-6deg);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotate(-3deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes introShockwave {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(6.5);
+  }
+}
+
+@keyframes introFlyIn {
+  0% {
+    opacity: 0;
+    transform: perspective(700px) translateZ(-320px) scale(0.45) rotate(-10deg);
+    filter: blur(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(700px) translateZ(0) scale(1) rotate(-3deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes introSlam {
+  0% {
+    opacity: 0;
+    transform: scale(2.1) translateY(-10px);
+    filter: blur(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
