@@ -71,7 +71,7 @@ export default function BagDrawer({
                 Order Confirmed
               </h3>
               <p className="text-sm text-zinc-400 max-w-[240px]">
-                Thank you for choosing YOUSSEF. Your pair is being prepared in our studio.
+                Thank you for choosing ZEVON. Your pair is being prepared in our studio.
               </p>
             </div>
           ) : items.length === 0 ? (

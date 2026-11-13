@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import BrandMark from './BrandMark';
 
 export default function IntroOverlay({ onComplete }) {
   const canvasRef = useRef(null);
@@ -197,18 +196,17 @@ export default function IntroOverlay({ onComplete }) {
           <div className="w-full h-[7px] rounded-full bg-gradient-to-r from-orange-600 via-amber-200 to-orange-600 shadow-[0_0_26px_6px_rgba(255,115,20,0.95),0_16px_50px_10px_rgba(255,80,0,0.5)]" />
         </div>
 
-        {/* Monumental YOUSSEF Lockup below the shelf */}
+        {/* Monumental ZEVON Logo Lockup below the shelf */}
         <div
-          style={{ top: 'calc(50% + 145px)' }}
+          style={{ top: 'calc(50% + 126px)' }}
           className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center text-center whitespace-nowrap"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <BrandMark size={36} className="drop-shadow-[0_0_18px_rgba(255,125,25,0.85)]" />
-            <span className="font-nav-brand logo-3d-text text-3xl sm:text-4xl font-extrabold tracking-[0.28em]">
-              YOUSSEF
-            </span>
-          </div>
-          <p className="font-display text-[11px] tracking-[0.42em] uppercase text-orange-300/90">
+          <img
+            src="/zevon-logo.png"
+            alt="ZEVON"
+            className="w-40 sm:w-48 h-auto object-contain drop-shadow-[0_0_24px_rgba(255,140,40,0.45)]"
+          />
+          <p className="mt-2 font-display text-[10px] sm:text-[11px] tracking-[0.42em] uppercase text-orange-300/90">
             Form, lit from within.
           </p>
         </div>

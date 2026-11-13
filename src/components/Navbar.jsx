@@ -1,6 +1,5 @@
 import React from 'react';
 import { Heart, ShoppingBag } from 'lucide-react';
-import BrandMark from './BrandMark';
 
 export default function Navbar({
   activeTab,
@@ -19,16 +18,20 @@ export default function Navbar({
         isZoomed ? 'bg-gradient-to-b from-black/60 to-transparent' : 'bg-transparent'
       }`}
     >
-      {/* Left: YOUSSEF 3D Logo */}
+      {/* Left: ZEVON 3D Logo */}
       <button
         onClick={() => onSelectTab('Display')}
         className="logo-3d-wrap flex items-center gap-3 group cursor-pointer focus:outline-none"
-        aria-label="YOUSSEF Home"
+        aria-label="ZEVON Home"
       >
-        <BrandMark size={30} className="logo-3d-icon" />
+        <img
+          src="/zevon-mark.png"
+          alt="ZEVON"
+          className="logo-3d-icon h-8 md:h-9 w-auto object-contain"
+        />
 
         <span className="font-nav-brand logo-3d-text text-base md:text-lg font-extrabold tracking-[0.26em]">
-          YOUSSEF
+          ZEVON
         </span>
       </button>
 

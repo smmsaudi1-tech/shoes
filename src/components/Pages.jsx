@@ -12,7 +12,7 @@ export function StoryPage({ onGoToDisplay, onGoToManufacture }) {
         <div className="md:col-span-7 space-y-6">
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[10px] font-semibold tracking-[0.26em] uppercase text-orange-400">
             <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_#ff6a00]" />
-            <span>01 // THE YOUSSEF ETHOS</span>
+            <span>01 // THE ZEVON ETHOS</span>
           </div>
 
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]">
@@ -20,7 +20,7 @@ export function StoryPage({ onGoToDisplay, onGoToManufacture }) {
           </h1>
 
           <p className="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-xl">
-            YOUSSEF began as an architectural lighting study applied to technical footwear. Every
+            ZEVON began as an architectural lighting study applied to technical footwear. Every
             silhouette is sculpted to catch warm peripheral light along its outsole—revealing
             material grain, seam geometry, and proportion without distraction.
           </p>
