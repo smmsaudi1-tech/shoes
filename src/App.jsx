@@ -21,7 +21,8 @@ export default function App() {
   const [toast, setToast] = useState(null);
 
   const stageRef = useRef(null);
-  const shelfRefs = useRef({});
+  const desktopShelfRefs = useRef({});
+  const mobileShelfRefs = useRef({});
   const toastTimerRef = useRef(null);
   const wheelLockRef = useRef(0);
 
@@ -33,7 +34,10 @@ export default function App() {
 
   const computeZoomForShoe = useCallback((shoe) => {
     const stage = stageRef.current;
-    const el = shelfRefs.current[shoe.id];
+    const isDesktop = window.innerWidth >= 768;
+    const el = isDesktop
+      ? desktopShelfRefs.current[shoe.id]
+      : mobileShelfRefs.current[shoe.id];
     if (!stage || !el) return;
 
     // Walk offsetLeft/offsetTop up to stageRef to get un-transformed coordinates
@@ -47,15 +51,15 @@ export default function App() {
     }
 
     // On desktop (>=768px) the card uses -translate-x-1/2 around its left% anchor, so offsetX is already the center
-    const elCenterX = window.innerWidth >= 768 ? offsetX : offsetX + el.offsetWidth / 2;
+    const elCenterX = isDesktop ? offsetX : offsetX + el.offsetWidth / 2;
     const elCenterY = offsetY + el.offsetHeight / 2;
     const stageCenterX = stage.offsetWidth / 2;
     const stageCenterY = stage.offsetHeight / 2;
 
     const ox = elCenterX - stageCenterX;
     const oy = elCenterY - stageCenterY;
-    const scale = window.innerWidth < 768 ? 2.85 : 4.25;
-    const yBias = window.innerWidth < 768 ? 18 : 44;
+    const scale = isDesktop ? 4.25 : 2.1;
+    const yBias = isDesktop ? 44 : -20;
 
     // translate3d before scale moves the shoe in a straight, lag-free line (no parabolic curve on edge shoes)
     const tx = -ox * scale;
@@ -249,6 +253,9 @@ export default function App() {
               return (
                 <div
                   key={`m-${shoe.id}`}
+                  ref={(el) => {
+                    mobileShelfRefs.current[shoe.id] = el;
+                  }}
                   onClick={() => handleSelectShoe(shoe)}
                   className={`shelf-card group relative w-full max-w-[200px] mx-auto flex flex-col items-center cursor-pointer transition-opacity duration-500 ${isSelected ? 'is-active z-20' : ''
                     } ${isDimmed ? 'opacity-20' : 'opacity-100'}`}
@@ -296,7 +303,7 @@ export default function App() {
                       <div
                         key={shoe.id}
                         ref={(el) => {
-                          shelfRefs.current[shoe.id] = el;
+                          desktopShelfRefs.current[shoe.id] = el;
                         }}
                         style={{ left: spotlightX[colIdx] }}
                         onClick={() => handleSelectShoe(shoe)}

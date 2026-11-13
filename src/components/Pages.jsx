@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Layers, Compass, ArrowLeft, ArrowRight, Sparkles, ShieldCheck, Cpu } from 'lucide-react';
+import { Flame, Layers, Compass, ArrowLeft, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
 
 export function StoryPage({ onGoToDisplay, onGoToManufacture }) {
   return (
@@ -82,7 +82,7 @@ export function StoryPage({ onGoToDisplay, onGoToManufacture }) {
 export function ManufacturePage({ onGoToStory, onGoToDisplay }) {
   const specs = [
     {
-      icon: Sparkles,
+      icon: null,
       code: '01 // UPPER',
       title: 'Italian Suede & Ripstop',
       desc: 'Hydrophobic micro-perforated ripstop paired with vegetable-tanned suede panels cut to 0.2mm tolerance.',
@@ -148,7 +148,9 @@ export function ManufacturePage({ onGoToStory, onGoToDisplay }) {
                   <span className="text-[10px] font-semibold tracking-[0.22em] text-orange-400">
                     {item.code}
                   </span>
-                  <Icon className="w-4 h-4 text-zinc-400 group-hover:text-orange-400 transition-colors" />
+                  {Icon && (
+                    <Icon className="w-4 h-4 text-zinc-400 group-hover:text-orange-400 transition-colors" />
+                  )}
                 </div>
                 <h3 className="font-display text-lg font-bold text-white mb-2">{item.title}</h3>
                 <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">{item.desc}</p>

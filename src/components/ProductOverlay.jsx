@@ -32,10 +32,10 @@ export default function ProductOverlay({
   if (!shoe) return null;
 
   return (
-    <div className="fixed inset-0 z-30 pointer-events-none flex items-center justify-between px-6 sm:px-10 md:px-16">
-      {/* Left Info Panel */}
-      <div className="pointer-events-auto relative z-10 max-w-[290px] md:max-w-[330px] animate-[fadeSlideLeft_0.55s_cubic-bezier(0.22,1,0.36,1)_forwards]">
-        <div className="flex items-center gap-2.5 mb-7">
+    <div className="fixed inset-0 z-30 pointer-events-none flex flex-col justify-between pt-20 pb-6 px-5 md:flex-row md:items-center md:justify-between md:py-0 md:px-16">
+      {/* Left / Top Info Panel */}
+      <div className="pointer-events-auto relative z-10 max-w-[330px] animate-[fadeSlideLeft_0.55s_cubic-bezier(0.22,1,0.36,1)_forwards]">
+        <div className="flex items-center gap-2.5 mb-3 md:mb-7">
           <button
             onClick={onClose}
             className="w-9 h-9 rounded-full bg-zinc-900/85 hover:bg-white/15 border border-white/15 flex items-center justify-center text-zinc-200 hover:text-white transition-colors cursor-pointer"
@@ -62,26 +62,26 @@ export default function ProductOverlay({
           </div>
         </div>
 
-        <p className="text-[11px] font-medium tracking-[0.24em] text-orange-400/90 uppercase mb-2">
+        <p className="text-[10px] md:text-[11px] font-medium tracking-[0.24em] text-orange-400/90 uppercase mb-1 md:mb-2">
           {shoe.collection}
         </p>
 
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-none mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+        <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-none mb-2 md:mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
           {shoe.name}
         </h1>
 
-        <p className="text-sm font-medium text-zinc-200 mb-2 leading-snug">
+        <p className="text-xs sm:text-sm font-medium text-zinc-200 mb-1 md:mb-2 leading-snug">
           {shoe.tagline}
         </p>
-        <p className="text-xs text-zinc-400 leading-relaxed hidden sm:block">
+        <p className="text-xs text-zinc-400 leading-relaxed hidden md:block">
           {shoe.description}
         </p>
       </div>
 
-      {/* Right Purchase Panel (lifted slightly higher for cleaner framing & dropdown space) */}
-      <div className="pointer-events-auto relative z-10 flex flex-col items-end gap-4 -translate-y-10 md:-translate-y-16 animate-[fadeSlideRight_0.55s_cubic-bezier(0.22,1,0.36,1)_forwards]">
-        <div className="text-right">
-          <span className="text-[10px] tracking-[0.2em] uppercase text-zinc-400 block mb-0.5">
+      {/* Right / Bottom Purchase Panel */}
+      <div className="pointer-events-auto relative z-10 flex flex-col items-stretch md:items-end gap-3 md:gap-4 md:-translate-y-16 animate-[fadeSlideRight_0.55s_cubic-bezier(0.22,1,0.36,1)_forwards]">
+        <div className="flex items-baseline justify-between md:block md:text-right">
+          <span className="text-[10px] tracking-[0.2em] uppercase text-zinc-400 md:block md:mb-0.5">
             Retail Price
           </span>
           <span className="font-display text-2xl md:text-3xl font-bold text-white">
@@ -89,68 +89,70 @@ export default function ProductOverlay({
           </span>
         </div>
 
-        {/* Custom Size Dropdown (matching video 00:08 & 00:15) */}
-        <div className="relative w-44" ref={dropdownRef}>
-          <button
-            onClick={() => setSizeOpen((prev) => !prev)}
-            className="w-full px-4 py-2.5 rounded-lg bg-zinc-950/90 hover:bg-zinc-900 border border-white/15 flex items-center justify-between text-xs font-medium text-white transition-colors cursor-pointer"
-          >
-            <span className="text-zinc-400 mr-2">Size</span>
-            <span className="font-semibold flex-1 text-left">{selectedSize}</span>
-            <ChevronDown
-              className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-300 ${
-                sizeOpen ? 'rotate-180' : ''
+        <div className="flex items-center gap-2.5 md:flex-col md:items-end md:gap-4">
+          {/* Custom Size Dropdown (opens upward on mobile, downward on desktop) */}
+          <div className="relative flex-1 md:flex-none md:w-44" ref={dropdownRef}>
+            <button
+              onClick={() => setSizeOpen((prev) => !prev)}
+              className="w-full px-3.5 md:px-4 h-11 md:h-auto md:py-2.5 rounded-full md:rounded-lg bg-zinc-950/90 hover:bg-zinc-900 border border-white/15 flex items-center justify-between text-xs font-medium text-white transition-colors cursor-pointer"
+            >
+              <span className="text-zinc-400 mr-2">Size</span>
+              <span className="font-semibold flex-1 text-left">{selectedSize}</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-300 ${
+                  sizeOpen ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+
+            {sizeOpen && (
+              <div className="absolute right-0 bottom-full mb-1.5 md:bottom-auto md:top-full md:mt-1.5 md:mb-0 w-full max-h-52 overflow-y-auto custom-scroll rounded-lg bg-zinc-950/95 border border-white/15 backdrop-blur-2xl shadow-2xl py-1 z-50">
+                {shoe.sizes.map((size) => {
+                  const active = size === selectedSize;
+                  return (
+                    <button
+                      key={size}
+                      onClick={() => {
+                        setSelectedSize(size);
+                        setSizeOpen(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-xs transition-colors flex items-center justify-between cursor-pointer ${
+                        active
+                          ? 'bg-orange-500/20 text-orange-300 font-semibold'
+                          : 'text-zinc-300 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      <span>{size}</span>
+                      {active && <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Add to Bag + Wishlist */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => onToggleWishlist(shoe.id)}
+              className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors cursor-pointer shrink-0 ${
+                isWishlisted
+                  ? 'bg-orange-500/20 border-orange-500/60 text-orange-400'
+                  : 'bg-zinc-950/85 border-white/15 text-zinc-300 hover:text-white hover:bg-white/10'
               }`}
-            />
-          </button>
+              aria-label="Toggle Wishlist"
+            >
+              <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-orange-400' : ''}`} />
+            </button>
 
-          {sizeOpen && (
-            <div className="absolute right-0 mt-1.5 w-full max-h-56 overflow-y-auto custom-scroll rounded-lg bg-zinc-950/95 border border-white/15 backdrop-blur-2xl shadow-2xl py-1 z-50">
-              {shoe.sizes.map((size) => {
-                const active = size === selectedSize;
-                return (
-                  <button
-                    key={size}
-                    onClick={() => {
-                      setSelectedSize(size);
-                      setSizeOpen(false);
-                    }}
-                    className={`w-full px-4 py-2 text-left text-xs transition-colors flex items-center justify-between cursor-pointer ${
-                      active
-                        ? 'bg-orange-500/20 text-orange-300 font-semibold'
-                        : 'text-zinc-300 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    <span>{size}</span>
-                    {active && <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Add to Bag + Wishlist */}
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => onToggleWishlist(shoe.id)}
-            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors cursor-pointer ${
-              isWishlisted
-                ? 'bg-orange-500/20 border-orange-500/60 text-orange-400'
-                : 'bg-zinc-950/85 border-white/15 text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-            aria-label="Toggle Wishlist"
-          >
-            <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-orange-400' : ''}`} />
-          </button>
-
-          <button
-            onClick={() => onAddToBag(shoe, selectedSize)}
-            className="h-11 px-6 rounded-full bg-white hover:bg-orange-400 text-zinc-950 text-xs font-bold tracking-[0.16em] uppercase flex items-center gap-2 transition-all duration-300 cursor-pointer shadow-[0_0_24px_rgba(255,255,255,0.18)] hover:shadow-[0_0_28px_rgba(255,140,40,0.45)]"
-          >
-            <ShoppingBag className="w-3.5 h-3.5" />
-            <span>ADD TO BAG</span>
-          </button>
+            <button
+              onClick={() => onAddToBag(shoe, selectedSize)}
+              className="h-11 px-5 md:px-6 rounded-full bg-white hover:bg-orange-400 text-zinc-950 text-xs font-bold tracking-[0.14em] md:tracking-[0.16em] uppercase flex items-center gap-2 transition-all duration-300 cursor-pointer shadow-[0_0_24px_rgba(255,255,255,0.18)] hover:shadow-[0_0_28px_rgba(255,140,40,0.45)] whitespace-nowrap"
+            >
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span>ADD TO BAG</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
